@@ -1,6 +1,6 @@
-const quiz = require('../models/quiz');
+const quiz = require('../models/quiz.model.js');
 
-const quizscore = async(req,res)=>{
+const quizscoreee = async(req,res)=>{
     const {score, userid} = req.body;
     try {
         const isUser = await quiz.findOne({
@@ -26,4 +26,4 @@ const quizscore = async(req,res)=>{
     }
 }
 
-module.exports = { quizscore }
+module.exports = { quizscoreee }

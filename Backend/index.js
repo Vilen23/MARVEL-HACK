@@ -12,4 +12,8 @@ app.use('/api/v1/auth',authRouter);
 app.use('/api/v1/comics',comicRouter); 
 app.use('/api/v1/quiz',quizRouter);
 
-app.listen(3000);
+const PORT = 3000;
+
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running and accessible on the local network at http://0.0.0.0:${PORT}`);
+  });
