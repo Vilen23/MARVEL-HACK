@@ -1,5 +1,6 @@
 const { Badge } = require('../models/badges.js');
 const quiz = require('../models/quiz.model.js');
+const  questions  = require('../models/quizques.js');
 const User = require('../models/user.model.js');
 const quizscoreee = async(req,res)=>{
     const {score, userId} = req.body;
@@ -72,4 +73,13 @@ const quizscoreee = async(req,res)=>{
     }
 }
 
-module.exports = { quizscoreee }
+const getquiz = async (req,res)=>{
+    try {
+        return res.status(200).json(questions);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: "Internal server error"});
+    }
+}
+
+module.exports = { quizscoreee , getquiz}
