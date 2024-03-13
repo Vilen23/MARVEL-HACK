@@ -9,6 +9,10 @@ const badgeSchema = new mongoose.Schema({
     badge:{
         type:String,
         default:"bronze"
+    },
+    nft:{
+        type:Array,
+        default:[]
     }
 })
 

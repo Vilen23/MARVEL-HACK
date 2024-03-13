@@ -14,29 +14,32 @@ const quizscoreee = async(req,res)=>{
             },{
                 score
             });
-            if (score>4 && score<6){
-                const badgeUpdate = await User.findByIdAndUpdate({
-                    _id: userId
-                },{
-                    badge: "Silver"
-                });
+            if (score > 4 && score < 6) {
+                const badgeUpdate = await User.findByIdAndUpdate(
+                    userId,
+                    {
+                        $set: { badge: "Silver" },
+                        $push: { nft: "SilverNFtLink" }
+                    }
+                );
             }
-            if(score>6 && score<8){
-                const badgeUpdate = await User.findByIdAndUpdate({
-                    _id: userId
-                },{
-                    badge: "Gold"
-                });
+            if (score > 6 && score < 8) {
+                const badgeUpdate = await User.findByIdAndUpdate(
+                    userId,
+                    {
+                        $set: { badge: "Gold" },
+                        $push: { nft: "GoldNftLink" }
+                    }
+                );
             }
-            if(score>8){
-                
-                const badgeupdate = await Badge.findOneAndUpdate({
-                    userId
-                },{
-                    badge: "Platinum"
-                
-                });
-                console.log(badgeupdate)
+            if (score > 8) {
+                const badgeUpdate = await User.findByIdAndUpdate(
+                    userId,
+                    {
+                        $set: { badge: "Platinum" },
+                        $push: { nft: "PlatNftLink" }
+                    }
+                );
             }
             return res.status(200).json({updateScore});
         }
@@ -45,26 +48,32 @@ const quizscoreee = async(req,res)=>{
             userId
         });
         await userScore.save();
-        if (score>4 && score<6){
-            const badgeUpdate = await User.findByIdAndUpdate({
-                _id: userId
-            },{
-                badge: "Silver"
-            });
+        if (score > 4 && score < 6) {
+            const badgeUpdate = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: { badge: "Silver" },
+                    $push: { nft: "SilverNFtLink" }
+                }
+            );
         }
-        if(score>6 && score<8){
-            const badgeUpdate = await User.findByIdAndUpdate({
-                _id: userId
-            },{
-                badge: "Gold"
-            });
+        if (score > 6 && score < 8) {
+            const badgeUpdate = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: { badge: "Gold" },
+                    $push: { nft: "GoldNftLink" }
+                }
+            );
         }
-        if(score>8){
-            const badgeUpdate = await User.findByIdAndUpdate({
-                _id: userId
-            },{
-                badge: "Platinum"
-            });
+        if (score > 8) {
+            const badgeUpdate = await User.findByIdAndUpdate(
+                userId,
+                {
+                    $set: { badge: "Platinum" },
+                    $push: { nft: "PlatNftLink" }
+                }
+            );
         }
         return res.status(200).json({userScore});
     } catch (error) {
