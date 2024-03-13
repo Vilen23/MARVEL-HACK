@@ -20,10 +20,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: 'https://www.gravatar.com/avatar/'
     },
-    level:{
-        type: String,
-        default: ""
-    }
+
 }, {timestamps: true});
 
 const User = mongoose.model('User', userSchema);

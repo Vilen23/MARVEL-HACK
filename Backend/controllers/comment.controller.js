@@ -20,7 +20,7 @@ const createComment = async(req,res) => {
 }
 
 const getComments = async(req,res) => {
-    const {postId} = req.params;
+    const {postId} = req.params.postId;
     if(!postId){
         return res.status(400).json({message: 'Post Id is required'});
     }

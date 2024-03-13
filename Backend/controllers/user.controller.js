@@ -3,6 +3,7 @@ const { hashpassword } = require("./password")
 const { userSchema, SigninSchema } = require("../validation/user.valid");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { Badge } = require("../models/badges");
 require('dotenv').config();
 
 const Signup = async (req, res) => {
@@ -19,6 +20,11 @@ const Signup = async (req, res) => {
       password: hashedPassword,
     });
     await user.save();
+    const badge = new Badge({
+      userId:user._id,
+      
+    })
+    await badge.save();
     return res.status(201).json({ message: "User created successfully" });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error" });
