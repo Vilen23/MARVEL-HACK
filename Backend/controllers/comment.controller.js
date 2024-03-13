@@ -1,4 +1,4 @@
-const comment = require('../models/comment.model.js');
+const Comment = require('../models/comment.model.js');
 
 const createComment = async(req,res) => {
     const {userId,comment,postId} = req.body;
@@ -6,7 +6,7 @@ const createComment = async(req,res) => {
         return res.status(400).json({message: 'All fields are required'});
     }
     try {
-        const newComment = new comment({
+        const newComment = new Comment({
             userId,
             comment,
             postId
@@ -20,12 +20,12 @@ const createComment = async(req,res) => {
 }
 
 const getComments = async(req,res) => {
-    const {postId} = req.params.postId;
+    const {postId} = req.params;
     if(!postId){
         return res.status(400).json({message: 'Post Id is required'});
     }
     try {
-        const comments = await comment.find({postId});
+        const comments = await Comment.find({postId}).sort({'createdAt': -1}); // sort comments in descending order of creation time
         res.status(200).json({comments});
     } catch (error) {
         console.log(error);
@@ -33,5 +33,28 @@ const getComments = async(req,res) => {
     }
 }
 
+const likeComment = async(req,res)=>{
+    const {commentId,userId,key} = req.params;
+    try {
+        const comment = await Comment.findById(commentId);
+        if(!comment){
+            return res.status(400).json({message: 'Invalid comment'});
+        }
+        if(key === 'like'){
+            if(comment.likes.includes(userId)){
+            console.log("oh yes")
+            comment.numberoflikes = comment.numberoflikes - 1;
+            comment.likes = comment.likes.filter((id) => id !== userId);
+            } else {
+            comment.likes.push(userId);
+            comment.numberoflikes = comment.numberoflikes + 1;
+            }
+        }
+        await comment.save();
+        return res.status(200).json({message: 'Comment liked successfully'});
+    } catch (error) {
+        return res.status(500).json({message: 'Internal server error'});
+    }
+}
 
-module.exports = { createComment, getComments }
+module.exports = { createComment, getComments , likeComment }
